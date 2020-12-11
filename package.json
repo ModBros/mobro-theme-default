@@ -1,0 +1,29 @@
+{
+  "name": "mobro-theme-skeleton",
+  "description": "Skeleton for mobro themes",
+  "author": "Mod Bros",
+  "repository": "https://github.com/ModBros/mobro-theme-skeleton",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "dev": "webpack --mode=development",
+    "build": "webpack --mode=production"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.5",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-transform-runtime": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-react": "^7.10.4",
+    "babel-loader": "^8.1.0",
+    "core-js": "^3.8.1",
+    "node-sass": "^4.14.1",
+    "path": "^0.12.7",
+    "regenerator-runtime": "^0.13.5",
+    "sass-loader": "^9.0.2",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "recharts": "^1.8.5"
+  }
+}
