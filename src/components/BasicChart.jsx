@@ -37,17 +37,16 @@ function BasicLineChart(props) {
             />
 
             <YAxis
+                height={height}
                 dataKey={"value"}
                 orientation={"right"}
+                domain={["dataMin", "dataMax"]}
                 width={35}
                 axisLine={false}
                 tickLine={false}
-                tickSize={5}
                 unit={unit}
-                tick={{fontSize: 12}}
-                allowDecimals={false}
-                interval={0}
-                ticks={[data.min, data.max]}
+                tick={{fontSize: 10, dy: -5}}
+                interval={"preserveStartEnd"}
             />
         </LineChart>
     );
@@ -101,9 +100,15 @@ function BasicPieChart(props) {
                 />
             </RadialBarChart>
 
-            <small className={"pie-chart-label"}>
-                {mobro.utils.channelData.extractValue(data)}{mobro.utils.channelData.extractRawUnit(data)}
-            </small>
+            <span className={"pie-chart-label"}>
+                <strong>
+                    {mobro.utils.channelData.extractValue(data)}
+                </strong>
+
+                <small className={"text-muted ml-1"}>
+                    {mobro.utils.channelData.extractRawUnit(data)}
+                </small>
+            </span>
         </Fragment>
     );
 }

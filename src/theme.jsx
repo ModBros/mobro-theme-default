@@ -1,5 +1,7 @@
 import React from "react";
 
+import "styles/theme.scss";
+
 //mobro.hooks.addComponentRoot("absolute");
 
 // mobro.hooks.addGlobalEditModificator((config) => ({
