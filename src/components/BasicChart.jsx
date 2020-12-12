@@ -2,6 +2,14 @@ import React, {Fragment, useState} from "react";
 import {mapChannelDataToSingleChartData} from "theme/utils/chart";
 import {Line, LineChart, PolarAngleAxis, RadialBar, RadialBarChart, YAxis} from "recharts";
 
+function getColor(color) {
+    if (mobro.utils.helper.empty(color)) {
+        return "black";
+    }
+
+    return `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
+}
+
 function getLabel(config, historyData) {
     if (!config?.showLabel) {
         return null;
@@ -23,8 +31,8 @@ function BasicLineChart(props) {
         width,
         height,
         unit,
-        chartData,
-        data
+        color,
+        chartData
     } = props;
 
     return (
@@ -34,6 +42,7 @@ function BasicLineChart(props) {
                 isAnimationActive={false}
                 strokeWidth={2}
                 dataKey={"value"}
+                stroke={getColor(color)}
             />
 
             <YAxis
@@ -57,6 +66,7 @@ function BasicPieChart(props) {
         width,
         height,
         chartData,
+        color,
         data
     } = props;
 
@@ -95,6 +105,7 @@ function BasicPieChart(props) {
                     dataKey={"value"}
                     denominator={"max"}
                     background
+                    fill={getColor(color)}
                     isAnimationActive={false}
                     cy={"100%"}
                 />
@@ -166,6 +177,7 @@ function BasicChart(props) {
                     <ChartComponent
                         width={width}
                         height={height}
+                        color={config?.color}
                         unit={unit}
                         chartData={chartData}
                         data={lastData}

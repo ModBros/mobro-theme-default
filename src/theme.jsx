@@ -101,6 +101,9 @@ mobro.hooks.addDataComponent({
                 {label: "Pie", value: "pie"}
             ]
         },
+        color: {
+            type: "color"
+        },
         channel: {
             type: "channel"
         }

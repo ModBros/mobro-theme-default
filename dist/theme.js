@@ -52797,6 +52797,14 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 
 
+function getColor(color) {
+  if (mobro.utils.helper.empty(color)) {
+    return "black";
+  }
+
+  return "rgba(".concat(color.r, ", ").concat(color.g, ", ").concat(color.b, ", ").concat(color.a, ")");
+}
+
 function getLabel(config, historyData) {
   if (!(config === null || config === void 0 ? void 0 : config.showLabel)) {
     return null;
@@ -52817,8 +52825,8 @@ function BasicLineChart(props) {
   var width = props.width,
       height = props.height,
       unit = props.unit,
-      chartData = props.chartData,
-      data = props.data;
+      color = props.color,
+      chartData = props.chartData;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_4__["LineChart"], {
     data: chartData,
     width: width,
@@ -52827,7 +52835,8 @@ function BasicLineChart(props) {
     dot: false,
     isAnimationActive: false,
     strokeWidth: 2,
-    dataKey: "value"
+    dataKey: "value",
+    stroke: getColor(color)
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_4__["YAxis"], {
     height: height,
     dataKey: "value",
@@ -52849,6 +52858,7 @@ function BasicPieChart(props) {
   var width = props.width,
       height = props.height,
       chartData = props.chartData,
+      color = props.color,
       data = props.data;
 
   var value = _objectSpread({}, mobro.utils.helper.last(chartData));
@@ -52879,6 +52889,7 @@ function BasicPieChart(props) {
     dataKey: "value",
     denominator: "max",
     background: true,
+    fill: getColor(color),
     isAnimationActive: false,
     cy: "100%"
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("span", {
@@ -52950,6 +52961,7 @@ function BasicChart(props) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(ChartComponent, {
     width: width,
     height: height,
+    color: config === null || config === void 0 ? void 0 : config.color,
     unit: unit,
     chartData: chartData,
     data: lastData
@@ -53095,6 +53107,9 @@ mobro.hooks.addDataComponent({
         label: "Pie",
         value: "pie"
       }]
+    },
+    color: {
+      type: "color"
     },
     channel: {
       type: "channel"
