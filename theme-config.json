@@ -1,5 +1,8 @@
 {
     "jsFiles": [
         "dist/theme.js"
-    ]
+    ],
+    "predefinedLayout": {
+        "predefined": "layout/predefined.json"
+    }
 }

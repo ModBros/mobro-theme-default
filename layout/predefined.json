@@ -1,0 +1,267 @@
+{
+    "config": {
+        "width": 480,
+        "height": 320,
+        "rowHeight": 10
+    },
+    "components": [
+        {
+            "type": "text",
+            "config": {
+                "align": "center",
+                "text": "CPU",
+                "x": 0,
+                "y": 0,
+                "w": 8,
+                "h": 2
+            }
+        },
+        {
+            "type": "basic-chart",
+            "config": {
+                "showLabel": false,
+                "customLabel": "",
+                "displayType": "pie",
+                "channel": {
+                    "source": "openhardwaremonitor",
+                    "hardwaretype": "Processor",
+                    "id": "/intelcpu/0/intelcpu/0/load/0"
+                },
+                "x": 0,
+                "y": 2,
+                "w": 8,
+                "h": 5
+            }
+        },
+        {
+            "type": "basic-value",
+            "config": {
+                "showLabel": true,
+                "channel": {
+                    "source": "librehardwaremonitor",
+                    "hardwaretype": "Processor",
+                    "id": "/intelcpu/0/intelcpu/0/load/0"
+                },
+                "x": 0,
+                "y": 7,
+                "w": 8,
+                "h": 2
+            }
+        },
+        {
+            "type": "basic-chart",
+            "config": {
+                "showLabel": false,
+                "customLabel": "",
+                "displayType": "line",
+                "channel": {
+                    "source": "librehardwaremonitor",
+                    "hardwaretype": "Processor",
+                    "id": "/intelcpu/0/intelcpu/0/temperature/4"
+                },
+                "x": 0,
+                "y": 9,
+                "w": 8,
+                "h": 5
+            }
+        },
+        {
+            "type": "basic-value",
+            "config": {
+                "showLabel": true,
+                "channel": {
+                    "source": "librehardwaremonitor",
+                    "hardwaretype": "Processor",
+                    "id": "/intelcpu/0/intelcpu/0/temperature/4"
+                },
+                "x": 0,
+                "y": 14,
+                "w": 8,
+                "h": 2
+            }
+        },
+        {
+            "type": "text",
+            "config": {
+                "align": "center",
+                "text": "GPU",
+                "x": 8,
+                "y": 0,
+                "w": 8,
+                "h": 2
+            }
+        },
+        {
+            "type": "basic-chart",
+            "config": {
+                "showLabel": false,
+                "customLabel": "",
+                "displayType": "pie",
+                "channel": {
+                    "source": "librehardwaremonitor",
+                    "hardwaretype": "Graphics",
+                    "id": "/gpu/0/gpu/0/load/0"
+                },
+                "x": 8,
+                "y": 2,
+                "w": 8,
+                "h": 5
+            }
+        },
+        {
+            "type": "basic-value",
+            "config": {
+                "showLabel": true,
+                "channel": {
+                    "source": "librehardwaremonitor",
+                    "hardwaretype": "Graphics",
+                    "id": "/gpu/0/gpu/0/load/0"
+                },
+                "x": 8,
+                "y": 7,
+                "w": 8,
+                "h": 2
+            }
+        },
+        {
+            "type": "basic-chart",
+            "config": {
+                "showLabel": false,
+                "customLabel": "",
+                "displayType": "line",
+                "channel": {
+                    "source": "librehardwaremonitor",
+                    "hardwaretype": "Graphics",
+                    "id": "/gpu/0/gpu/0/temperature/0"
+                },
+                "x": 8,
+                "y": 9,
+                "w": 8,
+                "h": 5
+            }
+        },
+        {
+            "type": "basic-value",
+            "config": {
+                "showLabel": true,
+                "channel": {
+                    "source": "librehardwaremonitor",
+                    "hardwaretype": "Graphics",
+                    "id": "/gpu/0/gpu/0/temperature/0"
+                },
+                "x": 8,
+                "y": 14,
+                "w": 8,
+                "h": 2
+            }
+        },
+        {
+            "type": "text",
+            "config": {
+                "align": "center",
+                "text": "RAM",
+                "x": 16,
+                "y": 0,
+                "w": 8,
+                "h": 2
+            }
+        },
+        {
+            "type": "basic-chart",
+            "config": {
+                "showLabel": false,
+                "customLabel": "",
+                "displayType": "pie",
+                "channel": {
+                    "source": "librehardwaremonitor",
+                    "hardwaretype": "Memory",
+                    "id": "/ram/ram/load/0"
+                },
+                "x": 16,
+                "y": 2,
+                "w": 8,
+                "h": 5
+            }
+        },
+        {
+            "type": "basic-value",
+            "config": {
+                "showLabel": true,
+                "channel": {
+                    "source": "librehardwaremonitor",
+                    "hardwaretype": "Memory",
+                    "id": "/ram/ram/data/1"
+                },
+                "x": 16,
+                "y": 7,
+                "w": 8,
+                "h": 2
+            }
+        },
+        {
+            "type": "basic-value",
+            "config": {
+                "showLabel": true,
+                "channel": {
+                    "source": "librehardwaremonitor",
+                    "hardwaretype": "Memory",
+                    "id": "/ram/ram/data/0"
+                },
+                "x": 16,
+                "y": 9,
+                "w": 8,
+                "h": 2
+            }
+        },
+        {
+            "type": "basic-value",
+            "config": {
+                "showLabel": true,
+                "channel": {
+                    "source": "librehardwaremonitor",
+                    "hardwaretype": "Network",
+                    "id": "/nic/{B585ADD9-E642-4497-ABA9-AC5DBE0BA087}/nic/{B585ADD9-E642-4497-ABA9-AC5DBE0BA087}/throughput/7"
+                },
+                "x": 12,
+                "y": 19,
+                "w": 12,
+                "h": 3
+            }
+        },
+        {
+            "type": "basic-value",
+            "config": {
+                "showLabel": true,
+                "channel": {
+                    "source": "librehardwaremonitor",
+                    "hardwaretype": "Network",
+                    "id": "/nic/{B585ADD9-E642-4497-ABA9-AC5DBE0BA087}/nic/{B585ADD9-E642-4497-ABA9-AC5DBE0BA087}/throughput/8"
+                },
+                "x": 0,
+                "y": 19,
+                "w": 12,
+                "h": 3
+            }
+        },
+        {
+            "type": "text",
+            "config": {
+                "align": "center",
+                "text": "NETWORK",
+                "x": 0,
+                "y": 17,
+                "w": 24,
+                "h": 2
+            }
+        },
+        {
+            "type": "spacer",
+            "config": {
+                "x": 0,
+                "y": 16,
+                "w": 24,
+                "h": 1
+            }
+        }
+    ]
+}
