@@ -1,6 +1,9 @@
 import React, {Fragment, useState} from "react";
 import {mapChannelDataToSingleChartData} from "theme/utils/chart";
 import {Line, LineChart, PolarAngleAxis, RadialBar, RadialBarChart, YAxis} from "recharts";
+const AlignCenter = mobro.hooks.getComponent("shared.layout.align-center");
+const LoadingIndicator = mobro.hooks.getComponent("shared.loading-indicator");
+const ComponentLabel = mobro.hooks.getComponent("shared.component-label");
 
 function getColor(color) {
     if (mobro.utils.helper.empty(color)) {
@@ -133,10 +136,6 @@ function BasicChart(props) {
     const historyData = mobro.utils.component.useHistoryChannelListener(config?.channel, 20);
     const lastData = mobro.utils.helper.last(historyData);
     const chartData = mapChannelDataToSingleChartData(historyData);
-
-    const AlignCenter = mobro.hooks.getComponent("shared.layout.align-center");
-    const LoadingIndicator = mobro.hooks.getComponent("shared.loading-indicator");
-    const ComponentLabel = mobro.hooks.getComponent("shared.component-label");
 
     if (!config?.displayType) {
         return (<AlignCenter><LoadingIndicator className={"small"}/></AlignCenter>)

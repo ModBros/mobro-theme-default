@@ -52796,6 +52796,9 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 
 
+var AlignCenter = mobro.hooks.getComponent("shared.layout.align-center");
+var LoadingIndicator = mobro.hooks.getComponent("shared.loading-indicator");
+var ComponentLabel = mobro.hooks.getComponent("shared.component-label");
 
 function getColor(color) {
   if (mobro.utils.helper.empty(color)) {
@@ -52910,9 +52913,6 @@ function BasicChart(props) {
   var historyData = mobro.utils.component.useHistoryChannelListener(config === null || config === void 0 ? void 0 : config.channel, 20);
   var lastData = mobro.utils.helper.last(historyData);
   var chartData = Object(theme_utils_chart__WEBPACK_IMPORTED_MODULE_3__["mapChannelDataToSingleChartData"])(historyData);
-  var AlignCenter = mobro.hooks.getComponent("shared.layout.align-center");
-  var LoadingIndicator = mobro.hooks.getComponent("shared.loading-indicator");
-  var ComponentLabel = mobro.hooks.getComponent("shared.component-label");
 
   if (!(config === null || config === void 0 ? void 0 : config.displayType)) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(AlignCenter, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(LoadingIndicator, {
