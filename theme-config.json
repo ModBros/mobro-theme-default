@@ -2,7 +2,7 @@
     "jsFiles": [
         "dist/theme.js"
     ],
-    "predefinedLayout": {
+    "predefinedLayouts": {
         "predefined": "layout/predefined.json"
     }
 }
