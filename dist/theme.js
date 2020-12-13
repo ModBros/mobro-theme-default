@@ -52972,6 +52972,17 @@ function BasicChart(props) {
 
 /***/ }),
 
+/***/ "./src/icons/chart_graph.svg":
+/*!***********************************!*\
+  !*** ./src/icons/chart_graph.svg ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 26 26\"><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_2-2\" data-name=\"Layer 2\"><line x1=\"17.09\" y1=\"21.97\" x2=\"17.09\" y2=\"16.14\" style=\"fill:none;stroke:currentColor;stroke-linejoin:round;stroke-width:2px\"></line><line x1=\"13.01\" y1=\"21.97\" x2=\"13.01\" y2=\"13.62\" style=\"fill:none;stroke:currentColor;stroke-linejoin:round;stroke-width:2px\"></line><line x1=\"8.93\" y1=\"21.97\" x2=\"8.93\" y2=\"18.47\" style=\"fill:none;stroke:currentColor;stroke-linejoin:round;stroke-width:2px\"></line><rect x=\"2.01\" y=\"2.07\" width=\"22\" height=\"22\" style=\"fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px\"></rect><polyline points=\"20.25 5.91 15.21 11.85 10.34 7 6.41 11.08\" style=\"fill:none;stroke:currentColor;stroke-linejoin:round;stroke-width:2px\"></polyline><rect x=\"5.95\" y=\"10.51\" width=\"1.15\" height=\"1.15\" rx=\"0.57\" style=\"fill:none;stroke:currentColor;stroke-linejoin:round;stroke-width:2px\"></rect><rect x=\"19.46\" y=\"5.55\" width=\"1.15\" height=\"1.15\" rx=\"0.57\" style=\"fill:none;stroke:currentColor;stroke-linejoin:round;stroke-width:2px\"></rect></g><g id=\"Layer_3\" data-name=\"Layer 3\"><rect width=\"26\" height=\"26\" style=\"fill:none\"></rect></g></g></svg>"
+
+/***/ }),
+
 /***/ "./src/styles/theme.scss":
 /*!*******************************!*\
   !*** ./src/styles/theme.scss ***!
@@ -53013,6 +53024,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var styles_theme_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styles/theme.scss */ "./src/styles/theme.scss");
 /* harmony import */ var theme_components_BasicChart__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! theme/components/BasicChart */ "./src/components/BasicChart.jsx");
+/* harmony import */ var theme_icons_chart_graph_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! theme/icons/chart_graph.svg */ "./src/icons/chart_graph.svg");
+/* harmony import */ var theme_icons_chart_graph_svg__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(theme_icons_chart_graph_svg__WEBPACK_IMPORTED_MODULE_3__);
 
  //mobro.hooks.addComponentRoot("absolute");
 // mobro.hooks.addGlobalEditModificator((config) => ({
@@ -53087,9 +53100,12 @@ __webpack_require__.r(__webpack_exports__);
 // }));
 
 
+
+mobro.utils.icons.addIcon("widget.graph", theme_icons_chart_graph_svg__WEBPACK_IMPORTED_MODULE_3___default.a);
 mobro.hooks.addDataComponent({
   name: "basic-chart",
   label: "Basic Chart",
+  icon: "widget.graph",
   component: theme_components_BasicChart__WEBPACK_IMPORTED_MODULE_2__["default"],
   config: {
     showLabel: {

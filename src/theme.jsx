@@ -82,10 +82,13 @@ import "styles/theme.scss";
 // }));
 
 import BasicChart from "theme/components/BasicChart";
+import GraphIcon from "theme/icons/chart_graph.svg";
 
+mobro.utils.icons.addIcon("widget.graph", GraphIcon);
 mobro.hooks.addDataComponent({
     name: "basic-chart",
     label: "Basic Chart",
+    icon: "widget.graph",
     component: BasicChart,
     config: {
         showLabel: {
