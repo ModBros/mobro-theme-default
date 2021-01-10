@@ -31,12 +31,19 @@ function getLabel(config, historyData) {
 
 function BasicLineChart(props) {
     const {
+        layoutConfig,
         width,
         height,
         unit,
         color,
         chartData
     } = props;
+
+    let fontColor = null;
+
+    if(layoutConfig?.widgetFontColor) {
+        fontColor = `rgba(${layoutConfig?.widgetFontColor?.r}, ${layoutConfig?.widgetFontColor?.g}, ${layoutConfig?.widgetFontColor?.b}, ${layoutConfig?.widgetFontColor?.a})`
+    }
 
     return (
         <LineChart data={chartData} width={width} height={height}>
@@ -57,7 +64,7 @@ function BasicLineChart(props) {
                 axisLine={false}
                 tickLine={false}
                 unit={unit}
-                tick={{fontSize: 10, dy: -5}}
+                tick={{fontSize: 10, dy: -5, fill: fontColor}}
                 interval={"preserveStartEnd"}
             />
         </LineChart>
@@ -66,6 +73,7 @@ function BasicLineChart(props) {
 
 function BasicPieChart(props) {
     const {
+        config,
         width,
         height,
         chartData,
@@ -78,9 +86,18 @@ function BasicPieChart(props) {
     };
 
     if (mobro.utils.channelData.isPercentageData(data)) {
+        value.min = 0;
         value.max = 100;
     } else {
         value.max = data.max;
+    }
+
+    if(config.max) {
+        value.max = parseInt(config.max);
+    }
+
+    if(config.min) {
+        value.min = parseInt(config.min);
     }
 
     return (
@@ -97,7 +114,7 @@ function BasicPieChart(props) {
             >
                 <PolarAngleAxis
                     type={"number"}
-                    domain={[0, 100]}
+                    domain={[value.min, value.max]}
                     angleAxisId={0}
                     tick={false}
                 />
@@ -129,6 +146,7 @@ function BasicPieChart(props) {
 
 function BasicChart(props) {
     const {
+        layoutConfig,
         config
     } = props;
 
@@ -174,9 +192,11 @@ function BasicChart(props) {
             <div className={"flex-fill d-flex overflow-hidden"} ref={setContainer}>
                 <div className={"chart-container position-absolute"}>
                     <ChartComponent
+                        layoutConfig={layoutConfig}
                         width={width}
                         height={height}
                         color={config?.color}
+                        config={config}
                         unit={unit}
                         chartData={chartData}
                         data={lastData}
@@ -187,4 +207,10 @@ function BasicChart(props) {
     );
 }
 
-export default BasicChart;
+const mapStateToProps = (state) => ({
+    layoutConfig: mobro.reducers.layout.getLayoutConfig(state)
+});
+
+export default mobro.lib.component.container.create("theme.widget.basic-chart", BasicChart)
+    .connect(mapStateToProps)
+    .generate();

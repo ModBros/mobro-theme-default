@@ -218,6 +218,64 @@ module.exports = _nonIterableRest;
 
 /***/ }),
 
+/***/ "./node_modules/@babel/runtime/helpers/objectWithoutProperties.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/objectWithoutProperties.js ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var objectWithoutPropertiesLoose = __webpack_require__(/*! ./objectWithoutPropertiesLoose */ "./node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js");
+
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {};
+  var target = objectWithoutPropertiesLoose(source, excluded);
+  var key, i;
+
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+      target[key] = source[key];
+    }
+  }
+
+  return target;
+}
+
+module.exports = _objectWithoutProperties;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+module.exports = _objectWithoutPropertiesLoose;
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime/helpers/slicedToArray.js":
 /*!**************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/slicedToArray.js ***!
@@ -52825,11 +52883,20 @@ function getLabel(config, historyData) {
 }
 
 function BasicLineChart(props) {
-  var width = props.width,
+  var layoutConfig = props.layoutConfig,
+      width = props.width,
       height = props.height,
       unit = props.unit,
       color = props.color,
       chartData = props.chartData;
+  var fontColor = null;
+
+  if (layoutConfig === null || layoutConfig === void 0 ? void 0 : layoutConfig.widgetFontColor) {
+    var _layoutConfig$widgetF, _layoutConfig$widgetF2, _layoutConfig$widgetF3, _layoutConfig$widgetF4;
+
+    fontColor = "rgba(".concat(layoutConfig === null || layoutConfig === void 0 ? void 0 : (_layoutConfig$widgetF = layoutConfig.widgetFontColor) === null || _layoutConfig$widgetF === void 0 ? void 0 : _layoutConfig$widgetF.r, ", ").concat(layoutConfig === null || layoutConfig === void 0 ? void 0 : (_layoutConfig$widgetF2 = layoutConfig.widgetFontColor) === null || _layoutConfig$widgetF2 === void 0 ? void 0 : _layoutConfig$widgetF2.g, ", ").concat(layoutConfig === null || layoutConfig === void 0 ? void 0 : (_layoutConfig$widgetF3 = layoutConfig.widgetFontColor) === null || _layoutConfig$widgetF3 === void 0 ? void 0 : _layoutConfig$widgetF3.b, ", ").concat(layoutConfig === null || layoutConfig === void 0 ? void 0 : (_layoutConfig$widgetF4 = layoutConfig.widgetFontColor) === null || _layoutConfig$widgetF4 === void 0 ? void 0 : _layoutConfig$widgetF4.a, ")");
+  }
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_4__["LineChart"], {
     data: chartData,
     width: width,
@@ -52851,14 +52918,16 @@ function BasicLineChart(props) {
     unit: unit,
     tick: {
       fontSize: 10,
-      dy: -5
+      dy: -5,
+      fill: fontColor
     },
     interval: "preserveStartEnd"
   }));
 }
 
 function BasicPieChart(props) {
-  var width = props.width,
+  var config = props.config,
+      width = props.width,
       height = props.height,
       chartData = props.chartData,
       color = props.color,
@@ -52867,9 +52936,18 @@ function BasicPieChart(props) {
   var value = _objectSpread({}, mobro.utils.helper.last(chartData));
 
   if (mobro.utils.channelData.isPercentageData(data)) {
+    value.min = 0;
     value.max = 100;
   } else {
     value.max = data.max;
+  }
+
+  if (config.max) {
+    value.max = parseInt(config.max);
+  }
+
+  if (config.min) {
+    value.min = parseInt(config.min);
   }
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_4__["RadialBarChart"], {
@@ -52883,7 +52961,7 @@ function BasicPieChart(props) {
     height: height * 2
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_4__["PolarAngleAxis"], {
     type: "number",
-    domain: [0, 100],
+    domain: [value.min, value.max],
     angleAxisId: 0,
     tick: false
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_4__["RadialBar"], {
@@ -52903,7 +52981,8 @@ function BasicPieChart(props) {
 }
 
 function BasicChart(props) {
-  var config = props.config;
+  var layoutConfig = props.layoutConfig,
+      config = props.config;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])(null),
       _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState, 2),
@@ -52959,16 +53038,24 @@ function BasicChart(props) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", {
     className: "chart-container position-absolute"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(ChartComponent, {
+    layoutConfig: layoutConfig,
     width: width,
     height: height,
     color: config === null || config === void 0 ? void 0 : config.color,
+    config: config,
     unit: unit,
     chartData: chartData,
     data: lastData
   }))));
 }
 
-/* harmony default export */ __webpack_exports__["default"] = (BasicChart);
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    layoutConfig: mobro.reducers.layout.getLayoutConfig(state)
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (mobro.lib.component.container.create("theme.widget.basic-chart", BasicChart).connect(mapStateToProps).generate());
 
 /***/ }),
 
@@ -53020,93 +53107,174 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var styles_theme_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styles/theme.scss */ "./src/styles/theme.scss");
-/* harmony import */ var theme_components_BasicChart__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! theme/components/BasicChart */ "./src/components/BasicChart.jsx");
-/* harmony import */ var theme_icons_chart_graph_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! theme/icons/chart_graph.svg */ "./src/icons/chart_graph.svg");
-/* harmony import */ var theme_icons_chart_graph_svg__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(theme_icons_chart_graph_svg__WEBPACK_IMPORTED_MODULE_3__);
-
- //mobro.hooks.addComponentRoot("absolute");
-// mobro.hooks.addGlobalEditModificator((config) => ({
-//     themeCardName: {
-//         type: "input"
-//     },
-//
-//     ...config
-// }));
-//
-// mobro.hooks.component("component.base-component", () => (props) => {
-//     const {
-//         type,
-//         path,
-//         config,
-//         Component,
-//         selectedComponent,
-//         selectComponent = mobro.utils.helper.noop
-//     } = props;
-//
-//     const renderConfig = mobro.hooks.getDataComponentRenderConfig(type);
-//     const baseClassNames = !renderConfig?.ignoreBaseClassNames ? "component card" : "";
-//     const cardName = config?.themeCardName;
-//     const ComponentLabel = mobro.hooks.getComponent("shared.component-label");
-//
-//     return (
-//         <div
-//             className={`${baseClassNames} ${renderConfig?.baseClassNames} ${selectedComponent === path ? "selection-indicator" : ""}`}
-//             onClick={() => selectComponent(path)}
-//         >
-//             <div className="card-body d-flex flex-column p-1">
-//                 {cardName !== null && (
-//                     <ComponentLabel label={cardName}/>
-//                 )}
-//
-//                 <div className={"component-body p-0 d-flex w-100 flex-fill"}>
-//                     <Component path={path} config={config}/>
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// })
-// ----------------------------------------------------
-// component hook
-// hooks.component("entry", (Component) => (props) => (
-//     <div className="my-wrapper">
-//         <Component {...props}/>
-//     </div>
-// ));
-// ----------------------------------------------------
-// reducers hook
-// const hardwareInitialState = {
-//     hardware: "intel"
-// }
-//
-// const dataInitialState = {
-//     data: "stuff"
-// }
-//
-// hooks.redux.reducers(event => event.mergeReducers({
-//     theme: event.combineReducers({
-//         hardware: event.createReducer(hardwareInitialState, {}),
-//         data: event.createReducer(dataInitialState, {})
-//     })
-// }));
-// ----------------------------------------------------
-// map state to props hook
-// hooks.redux.mapStateToProps("app", event => event.mergeMapStateToProps({
-//     myCustomPropFromState: event.state.layout.foo,
-//     hardware: event.state.theme.hardware.hardware,
-//     data: event.state.theme.data.data
-// }));
+/* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/objectWithoutProperties.js");
+/* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var mobro__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! mobro */ "mobro");
+/* harmony import */ var mobro__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(mobro__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var styles_theme_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! styles/theme.scss */ "./src/styles/theme.scss");
+/* harmony import */ var theme_components_BasicChart__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! theme/components/BasicChart */ "./src/components/BasicChart.jsx");
+/* harmony import */ var theme_icons_chart_graph_svg__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! theme/icons/chart_graph.svg */ "./src/icons/chart_graph.svg");
+/* harmony import */ var theme_icons_chart_graph_svg__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(theme_icons_chart_graph_svg__WEBPACK_IMPORTED_MODULE_5__);
 
 
 
-mobro.utils.icons.addIcon("widget.graph", theme_icons_chart_graph_svg__WEBPACK_IMPORTED_MODULE_3___default.a);
-mobro.hooks.addDataComponent({
+
+mobro__WEBPACK_IMPORTED_MODULE_2___default.a.hooks.globalConfig(function (event) {
+  event.setEditConfig({
+    tabs: {
+      type: "tabs",
+      children: [{
+        label: "General",
+        children: event.getEditConfig() // original edit config in general tab
+
+      }, {
+        label: "Widgets",
+        children: {
+          widgetFontSize: {
+            type: "numeric"
+          },
+          widgetFontColor: {
+            type: "color"
+          },
+          widgetBackgroundColor: {
+            type: "color"
+          },
+          disableWidgetBorder: {
+            type: "checkbox"
+          }
+        }
+      }]
+    }
+  });
+});
+mobro__WEBPACK_IMPORTED_MODULE_2___default.a.hooks.addGlobalEditModificator(function (config) {
+  return {
+    tabs: {
+      type: "tabs",
+      children: [{
+        label: "General",
+        children: config
+      }, {
+        label: "Styling",
+        children: {
+          widgetFontSize: {
+            type: "numeric"
+          },
+          widgetFontColor: {
+            type: "color"
+          },
+          widgetBackgroundColor: {
+            type: "color"
+          }
+        }
+      }]
+    }
+  };
+});
+mobro__WEBPACK_IMPORTED_MODULE_2___default.a.hooks.redux.mapStateToProps("entry", function (event) {
+  event.mergeMapStateToProps({
+    layoutConfig: mobro__WEBPACK_IMPORTED_MODULE_2___default.a.reducers.layout.getLayoutConfig(event.getState())
+  });
+});
+mobro__WEBPACK_IMPORTED_MODULE_2___default.a.hooks.component("entry", function (Component) {
+  return function (props) {
+    var layoutConfig = props.layoutConfig,
+        rest = _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0___default()(props, ["layoutConfig"]);
+
+    var style = {};
+
+    if (layoutConfig === null || layoutConfig === void 0 ? void 0 : layoutConfig.widgetFontSize) {
+      style.fontSize = "".concat(layoutConfig === null || layoutConfig === void 0 ? void 0 : layoutConfig.widgetFontSize, "px");
+    }
+
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+      style: style,
+      className: "d-flex w-100"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(Component, rest));
+  };
+}); // map the layoutConfig prop from the redux store to the base component that surrounds every widget
+
+mobro__WEBPACK_IMPORTED_MODULE_2___default.a.hooks.redux.mapStateToProps("widget.base-component", function (event) {
+  event.mergeMapStateToProps({
+    layoutConfig: mobro__WEBPACK_IMPORTED_MODULE_2___default.a.reducers.layout.getLayoutConfig(event.getState())
+  });
+}); // override the base component to add the background color and border option from the global config
+
+mobro__WEBPACK_IMPORTED_MODULE_2___default.a.hooks.component("widget.base-component", function () {
+  return function (props) {
+    var type = props.type,
+        path = props.path,
+        config = props.config,
+        Component = props.Component,
+        layoutMode = props.layoutMode,
+        layoutConfig = props.layoutConfig,
+        selectedComponent = props.selectedComponent,
+        _props$selectComponen = props.selectComponent,
+        selectComponent = _props$selectComponen === void 0 ? noop : _props$selectComponen;
+    var renderConfig = mobro__WEBPACK_IMPORTED_MODULE_2___default.a.hooks.getWidgetRenderConfig(type);
+    var baseClassNames = !(renderConfig === null || renderConfig === void 0 ? void 0 : renderConfig.ignoreBaseClassNames) ? "component card" : "";
+    var defaultClasses = "";
+    var doSelectComponent = mobro__WEBPACK_IMPORTED_MODULE_2___default.a.utils.helper.noop;
+    var toggleEditSidebar = mobro__WEBPACK_IMPORTED_MODULE_2___default.a.utils.helper.noop;
+
+    if (mobro__WEBPACK_IMPORTED_MODULE_2___default.a.utils.layout.isEditMode(layoutMode)) {
+      defaultClasses = "clickable";
+
+      doSelectComponent = function doSelectComponent() {
+        return selectComponent(path);
+      };
+
+      toggleEditSidebar = mobro__WEBPACK_IMPORTED_MODULE_2___default.a.utils.component.withEditSidebar({
+        path: path,
+        type: type,
+        config: config
+      });
+    }
+
+    var style = {};
+    var widgetBackgroundColor = (config === null || config === void 0 ? void 0 : config.widgetBackgroundColor) || (layoutConfig === null || layoutConfig === void 0 ? void 0 : layoutConfig.widgetBackgroundColor);
+    var widgetFontSize = config === null || config === void 0 ? void 0 : config.widgetFontSize;
+    var widgetFontColor = (config === null || config === void 0 ? void 0 : config.widgetFontColor) || (layoutConfig === null || layoutConfig === void 0 ? void 0 : layoutConfig.widgetFontColor);
+
+    if (widgetBackgroundColor) {
+      style.backgroundColor = "rgba(".concat(widgetBackgroundColor === null || widgetBackgroundColor === void 0 ? void 0 : widgetBackgroundColor.r, ", ").concat(widgetBackgroundColor === null || widgetBackgroundColor === void 0 ? void 0 : widgetBackgroundColor.g, ", ").concat(widgetBackgroundColor === null || widgetBackgroundColor === void 0 ? void 0 : widgetBackgroundColor.b, ", ").concat(widgetBackgroundColor === null || widgetBackgroundColor === void 0 ? void 0 : widgetBackgroundColor.a, ")");
+    }
+
+    if (widgetFontColor) {
+      style.color = "rgba(".concat(widgetFontColor === null || widgetFontColor === void 0 ? void 0 : widgetFontColor.r, ", ").concat(widgetFontColor === null || widgetFontColor === void 0 ? void 0 : widgetFontColor.g, ", ").concat(widgetFontColor === null || widgetFontColor === void 0 ? void 0 : widgetFontColor.b, ", ").concat(widgetFontColor === null || widgetFontColor === void 0 ? void 0 : widgetFontColor.a, ")");
+    }
+
+    if (widgetFontSize) {
+      style.fontSize = "".concat(widgetFontSize, "px");
+    }
+
+    if (layoutConfig === null || layoutConfig === void 0 ? void 0 : layoutConfig.disableWidgetBorder) {
+      defaultClasses += " border-0";
+    }
+
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+      className: "".concat(defaultClasses, " ").concat(baseClassNames, " ").concat(renderConfig === null || renderConfig === void 0 ? void 0 : renderConfig.baseClassNames, " ").concat(selectedComponent === path ? "selection-indicator" : ""),
+      onClick: doSelectComponent,
+      onDoubleClick: toggleEditSidebar,
+      style: style
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+      className: "component-body card-body"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(Component, {
+      path: path,
+      config: config
+    })));
+  };
+});
+
+
+mobro__WEBPACK_IMPORTED_MODULE_2___default.a.utils.icons.addIcon("widget.graph", theme_icons_chart_graph_svg__WEBPACK_IMPORTED_MODULE_5___default.a);
+mobro__WEBPACK_IMPORTED_MODULE_2___default.a.hooks.addDataComponent({
   name: "basic-chart",
   label: "Basic Chart",
   icon: "widget.graph",
-  component: theme_components_BasicChart__WEBPACK_IMPORTED_MODULE_2__["default"],
+  component: theme_components_BasicChart__WEBPACK_IMPORTED_MODULE_4__["default"],
   config: {
     showLabel: {
       type: "checkbox"
@@ -53129,6 +53297,24 @@ mobro.hooks.addDataComponent({
     },
     channel: {
       type: "channel"
+    },
+    minMax: {
+      type: "field-container",
+      children: [{
+        width: 6,
+        children: {
+          min: {
+            type: "numeric"
+          }
+        }
+      }, {
+        width: 6,
+        children: {
+          max: {
+            type: "numeric"
+          }
+        }
+      }]
     }
   }
 });
