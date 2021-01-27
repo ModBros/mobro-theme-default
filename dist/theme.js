@@ -52866,6 +52866,14 @@ function getColor(color) {
   return "rgba(".concat(color.r, ", ").concat(color.g, ", ").concat(color.b, ", ").concat(color.a, ")");
 }
 
+function isNumeric(value) {
+  if (value === null || value === "") {
+    return false;
+  }
+
+  return !isNaN(parseFloat(value));
+}
+
 function getLabel(config, historyData) {
   if (!(config === null || config === void 0 ? void 0 : config.showLabel)) {
     return null;
@@ -52883,7 +52891,8 @@ function getLabel(config, historyData) {
 }
 
 function BasicLineChart(props) {
-  var layoutConfig = props.layoutConfig,
+  var config = props.config,
+      layoutConfig = props.layoutConfig,
       width = props.width,
       height = props.height,
       unit = props.unit,
@@ -52897,6 +52906,25 @@ function BasicLineChart(props) {
     fontColor = "rgba(".concat(layoutConfig === null || layoutConfig === void 0 ? void 0 : (_layoutConfig$widgetF = layoutConfig.widgetFontColor) === null || _layoutConfig$widgetF === void 0 ? void 0 : _layoutConfig$widgetF.r, ", ").concat(layoutConfig === null || layoutConfig === void 0 ? void 0 : (_layoutConfig$widgetF2 = layoutConfig.widgetFontColor) === null || _layoutConfig$widgetF2 === void 0 ? void 0 : _layoutConfig$widgetF2.g, ", ").concat(layoutConfig === null || layoutConfig === void 0 ? void 0 : (_layoutConfig$widgetF3 = layoutConfig.widgetFontColor) === null || _layoutConfig$widgetF3 === void 0 ? void 0 : _layoutConfig$widgetF3.b, ", ").concat(layoutConfig === null || layoutConfig === void 0 ? void 0 : (_layoutConfig$widgetF4 = layoutConfig.widgetFontColor) === null || _layoutConfig$widgetF4 === void 0 ? void 0 : _layoutConfig$widgetF4.a, ")");
   }
 
+  var min = "dataMin";
+  var max = "dataMax";
+  var ticks = null;
+  var allowDataOverflow = false;
+
+  if (isNumeric(config === null || config === void 0 ? void 0 : config.min)) {
+    min = parseFloat(config === null || config === void 0 ? void 0 : config.min);
+  }
+
+  if (isNumeric(config === null || config === void 0 ? void 0 : config.max)) {
+    max = parseFloat(config === null || config === void 0 ? void 0 : config.max);
+  }
+
+  if (isNumeric(config === null || config === void 0 ? void 0 : config.min) && isNumeric(config === null || config === void 0 ? void 0 : config.max)) {
+    ticks = [parseFloat(min), parseFloat(max)];
+    allowDataOverflow = true;
+  }
+
+  console.log(min, max);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_4__["LineChart"], {
     data: chartData,
     width: width,
@@ -52911,7 +52939,9 @@ function BasicLineChart(props) {
     height: height,
     dataKey: "value",
     orientation: "right",
-    domain: ["dataMin", "dataMax"],
+    ticks: ticks,
+    domain: [min, max],
+    allowDataOverflow: allowDataOverflow,
     width: 35,
     axisLine: false,
     tickLine: false,
@@ -52942,11 +52972,11 @@ function BasicPieChart(props) {
     value.max = data.max;
   }
 
-  if (config.max) {
+  if (isNumeric(config.max)) {
     value.max = parseInt(config.max);
   }
 
-  if (config.min) {
+  if (isNumeric(config.min)) {
     value.min = parseInt(config.min);
   }
 
@@ -53238,7 +53268,7 @@ mobro__WEBPACK_IMPORTED_MODULE_2___default.a.hooks.component("widget.base-compon
     var widgetFontSize = config === null || config === void 0 ? void 0 : config.widgetFontSize;
     var widgetFontColor = (config === null || config === void 0 ? void 0 : config.widgetFontColor) || (layoutConfig === null || layoutConfig === void 0 ? void 0 : layoutConfig.widgetFontColor);
 
-    if (widgetBackgroundColor) {
+    if (widgetBackgroundColor && !(renderConfig === null || renderConfig === void 0 ? void 0 : renderConfig.ignoreBaseClassNames)) {
       style.backgroundColor = "rgba(".concat(widgetBackgroundColor === null || widgetBackgroundColor === void 0 ? void 0 : widgetBackgroundColor.r, ", ").concat(widgetBackgroundColor === null || widgetBackgroundColor === void 0 ? void 0 : widgetBackgroundColor.g, ", ").concat(widgetBackgroundColor === null || widgetBackgroundColor === void 0 ? void 0 : widgetBackgroundColor.b, ", ").concat(widgetBackgroundColor === null || widgetBackgroundColor === void 0 ? void 0 : widgetBackgroundColor.a, ")");
     }
 

@@ -119,7 +119,7 @@ mobro.hooks.component("widget.base-component", () => (props) => {
     const widgetFontSize = config?.widgetFontSize
     const widgetFontColor = config?.widgetFontColor || layoutConfig?.widgetFontColor;
 
-    if(widgetBackgroundColor) {
+    if(widgetBackgroundColor && !renderConfig?.ignoreBaseClassNames) {
         style.backgroundColor = `rgba(${widgetBackgroundColor?.r}, ${widgetBackgroundColor?.g}, ${widgetBackgroundColor?.b}, ${widgetBackgroundColor?.a})`
     }
 

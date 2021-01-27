@@ -1,6 +1,7 @@
 import React, {Fragment, useState} from "react";
 import {mapChannelDataToSingleChartData} from "theme/utils/chart";
 import {Line, LineChart, PolarAngleAxis, RadialBar, RadialBarChart, YAxis} from "recharts";
+
 const AlignCenter = mobro.hooks.getComponent("shared.layout.align-center");
 const LoadingIndicator = mobro.hooks.getComponent("shared.loading-indicator");
 const ComponentLabel = mobro.hooks.getComponent("shared.component-label");
@@ -11,6 +12,14 @@ function getColor(color) {
     }
 
     return `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
+}
+
+function isNumeric(value) {
+    if (value === null || value === "") {
+        return false;
+    }
+
+    return !isNaN(parseFloat(value));
 }
 
 function getLabel(config, historyData) {
@@ -31,6 +40,7 @@ function getLabel(config, historyData) {
 
 function BasicLineChart(props) {
     const {
+        config,
         layoutConfig,
         width,
         height,
@@ -41,9 +51,29 @@ function BasicLineChart(props) {
 
     let fontColor = null;
 
-    if(layoutConfig?.widgetFontColor) {
+    if (layoutConfig?.widgetFontColor) {
         fontColor = `rgba(${layoutConfig?.widgetFontColor?.r}, ${layoutConfig?.widgetFontColor?.g}, ${layoutConfig?.widgetFontColor?.b}, ${layoutConfig?.widgetFontColor?.a})`
     }
+
+    let min = "dataMin";
+    let max = "dataMax";
+    let ticks = null;
+    let allowDataOverflow = false;
+
+    if (isNumeric(config?.min)) {
+        min = parseFloat(config?.min);
+    }
+
+    if (isNumeric(config?.max)) {
+        max = parseFloat(config?.max) ;
+    }
+
+    if(isNumeric(config?.min) && isNumeric(config?.max)) {
+        ticks = [parseFloat(min), parseFloat(max)];
+        allowDataOverflow = true;
+    }
+
+    console.log(min, max);
 
     return (
         <LineChart data={chartData} width={width} height={height}>
@@ -59,7 +89,9 @@ function BasicLineChart(props) {
                 height={height}
                 dataKey={"value"}
                 orientation={"right"}
-                domain={["dataMin", "dataMax"]}
+                ticks={ticks}
+                domain={[min, max]}
+                allowDataOverflow={allowDataOverflow}
                 width={35}
                 axisLine={false}
                 tickLine={false}
@@ -92,11 +124,11 @@ function BasicPieChart(props) {
         value.max = data.max;
     }
 
-    if(config.max) {
+    if (isNumeric(config.max)) {
         value.max = parseInt(config.max);
     }
 
-    if(config.min) {
+    if (isNumeric(config.min)) {
         value.min = parseInt(config.min);
     }
 
