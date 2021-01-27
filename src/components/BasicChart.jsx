@@ -50,9 +50,10 @@ function BasicLineChart(props) {
     } = props;
 
     let fontColor = null;
+    let fontColorRgb = config?.widgetFontColor || layoutConfig?.widgetFontColor;
 
-    if (layoutConfig?.widgetFontColor) {
-        fontColor = `rgba(${layoutConfig?.widgetFontColor?.r}, ${layoutConfig?.widgetFontColor?.g}, ${layoutConfig?.widgetFontColor?.b}, ${layoutConfig?.widgetFontColor?.a})`
+    if (fontColorRgb) {
+        fontColor = getColor(fontColorRgb);
     }
 
     let min = "dataMin";
@@ -110,6 +111,7 @@ function BasicPieChart(props) {
         height,
         chartData,
         color,
+        inverseColor,
         data
     } = props;
 
@@ -130,6 +132,12 @@ function BasicPieChart(props) {
 
     if (isNumeric(config.min)) {
         value.min = parseInt(config.min);
+    }
+
+    let background = {};
+
+    if(inverseColor) {
+        background.fill = getColor(inverseColor);
     }
 
     return (
@@ -156,7 +164,7 @@ function BasicPieChart(props) {
                     clockWise={true}
                     dataKey={"value"}
                     denominator={"max"}
-                    background
+                    background={background}
                     fill={getColor(color)}
                     isAnimationActive={false}
                     cy={"100%"}
@@ -228,6 +236,7 @@ function BasicChart(props) {
                         width={width}
                         height={height}
                         color={config?.color}
+                        inverseColor={config?.inverseColor}
                         config={config}
                         unit={unit}
                         chartData={chartData}

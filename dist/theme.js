@@ -52899,11 +52899,10 @@ function BasicLineChart(props) {
       color = props.color,
       chartData = props.chartData;
   var fontColor = null;
+  var fontColorRgb = (config === null || config === void 0 ? void 0 : config.widgetFontColor) || (layoutConfig === null || layoutConfig === void 0 ? void 0 : layoutConfig.widgetFontColor);
 
-  if (layoutConfig === null || layoutConfig === void 0 ? void 0 : layoutConfig.widgetFontColor) {
-    var _layoutConfig$widgetF, _layoutConfig$widgetF2, _layoutConfig$widgetF3, _layoutConfig$widgetF4;
-
-    fontColor = "rgba(".concat(layoutConfig === null || layoutConfig === void 0 ? void 0 : (_layoutConfig$widgetF = layoutConfig.widgetFontColor) === null || _layoutConfig$widgetF === void 0 ? void 0 : _layoutConfig$widgetF.r, ", ").concat(layoutConfig === null || layoutConfig === void 0 ? void 0 : (_layoutConfig$widgetF2 = layoutConfig.widgetFontColor) === null || _layoutConfig$widgetF2 === void 0 ? void 0 : _layoutConfig$widgetF2.g, ", ").concat(layoutConfig === null || layoutConfig === void 0 ? void 0 : (_layoutConfig$widgetF3 = layoutConfig.widgetFontColor) === null || _layoutConfig$widgetF3 === void 0 ? void 0 : _layoutConfig$widgetF3.b, ", ").concat(layoutConfig === null || layoutConfig === void 0 ? void 0 : (_layoutConfig$widgetF4 = layoutConfig.widgetFontColor) === null || _layoutConfig$widgetF4 === void 0 ? void 0 : _layoutConfig$widgetF4.a, ")");
+  if (fontColorRgb) {
+    fontColor = getColor(fontColorRgb);
   }
 
   var min = "dataMin";
@@ -52961,6 +52960,7 @@ function BasicPieChart(props) {
       height = props.height,
       chartData = props.chartData,
       color = props.color,
+      inverseColor = props.inverseColor,
       data = props.data;
 
   var value = _objectSpread({}, mobro.utils.helper.last(chartData));
@@ -52978,6 +52978,12 @@ function BasicPieChart(props) {
 
   if (isNumeric(config.min)) {
     value.min = parseInt(config.min);
+  }
+
+  var background = {};
+
+  if (inverseColor) {
+    background.fill = getColor(inverseColor);
   }
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_4__["RadialBarChart"], {
@@ -52999,7 +53005,7 @@ function BasicPieChart(props) {
     clockWise: true,
     dataKey: "value",
     denominator: "max",
-    background: true,
+    background: background,
     fill: getColor(color),
     isAnimationActive: false,
     cy: "100%"
@@ -53072,6 +53078,7 @@ function BasicChart(props) {
     width: width,
     height: height,
     color: config === null || config === void 0 ? void 0 : config.color,
+    inverseColor: config === null || config === void 0 ? void 0 : config.inverseColor,
     config: config,
     unit: unit,
     chartData: chartData,
@@ -53323,6 +53330,9 @@ mobro__WEBPACK_IMPORTED_MODULE_2___default.a.hooks.addDataComponent({
       }]
     },
     color: {
+      type: "color"
+    },
+    inverseColor: {
       type: "color"
     },
     channel: {

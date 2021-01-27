@@ -175,6 +175,9 @@ mobro.hooks.addDataComponent({
         color: {
             type: "color"
         },
+        inverseColor: {
+            type: "color"
+        },
         channel: {
             type: "channel"
         },
