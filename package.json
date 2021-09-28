@@ -27,6 +27,8 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
+    "highcharts": "^9.2.2",
+    "highcharts-react-official": "^3.0.0",
     "recharts": "^1.8.5"
   }
 }
