@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useRef} from 'react';
 import Chart from 'theme/components/Chart.container';
 import {defaultFontColor, maxValue, minValue} from 'theme/utils/chart'
 import {colorToRgba} from 'theme/utils/color'
@@ -14,6 +14,8 @@ function createOptions(configRef, layoutConfigRef, channelDataRef, settings, opt
         colors: [colorToRgba(configRef.current?.lineColor, defaultLineColor)],
         chart: {
             backgroundColor: 'rgba(0, 0, 0, 0)',
+            margin: [0, 0, 0, 0],
+            spacing: [0, 0, 0, 0],
             animation: {
                 duration: 500
             }
@@ -124,12 +126,11 @@ function LineChart(props) {
         ...chartProps
     } = props;
 
-    return (
-        <div className={'d-flex flex-column w-100'}>
-            <ChartValue
-                config={chartProps.config}
-            />
+    const container = useRef(null);
+    const containerSize = useRef([0, 0]);
 
+    return (
+        <div className={'d-flex flex-column w-100'} ref={container}>
             <Chart
                 {...chartProps}
                 createOptions={createOptions}
@@ -143,13 +144,19 @@ function LineChart(props) {
                     'widgetFontColor'
                 ]}
                 writeDataToSeries={(channelDataRef, optionsRef, configRef, layoutConfigRef, chartRef) => {
+                    const [width, height] = containerSize.current;
+                    const [currentWidth, currentHeight] = [container.current.offsetWidth, container.current.offsetHeight];
+
+                    if(width !== currentWidth || height !== currentHeight) {
+                        chartRef.current?.chart?.reflow();
+                    }
+
                     const point = [
                         (new Date()).getTime(),
                         parseFloat(mobro.utils.channelData.extractValue(channelDataRef.current))
                     ];
 
                     chartRef.current?.chart?.series?.[0]?.addPoint(point, false, true);
-                    chartRef?.chart?.redraw();
                 }}
                 adaptOptions={(channelDataRef, optionsRef, configRef) => {
                 }}
