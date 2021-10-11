@@ -67,16 +67,18 @@ function Chart(props) {
         );
     }
 
+    const height = config.height ?? props.height;
+
     const chart = (
         <HighchartsReact
             highcharts={Highcharts}
             ref={chartRef}
             options={options}
-            containerProps={{style: {width: '100%', height: props.height ?? '100%'}}}
+            containerProps={{style: {width: '100%', height: props.inline && height ? `${height}px` : '100%'}}}
         />
     );
 
-    return !props.inline || props.height ? chart : (
+    return !props.inline || height ? chart : (
         <div className={'embed-responsive embed-responsive-16by9'}>
             <div className={'embed-responsive-item'}>
                 {chart}

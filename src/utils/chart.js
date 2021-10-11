@@ -10,16 +10,16 @@ export function mapChannelDataToSingleChartData(channelData) {
 import {colorToRgba} from './color'
 import {getWidgetFontFamily} from './widget'
 
-export const defaultFontColor = 'white';
-export const defaultFrontColor = 'rgb(0 255 255)';
-export const defaultBackColor = '#506e78';
+export const defaultFontColor = 'black';
+export const defaultFrontColor = 'rgb(0, 0, 0)';
+export const defaultBackColor = '#efefef';
 
 export function basicTextColor(configRef, layoutConfigRef) {
     return colorToRgba(configRef.current.widgetFontColor, colorToRgba(layoutConfigRef.current.widgetFontColor, defaultFontColor));
 }
 
 export function valueTextColor(configRef) {
-    return colorToRgba(configRef.current.frontColor, defaultFrontColor);
+    return colorToRgba(configRef.current.color, defaultFrontColor);
 }
 
 export function frontColor(configRef) {
@@ -67,21 +67,8 @@ export function redrawDoughnutOrGauge(
         }
 
         const centerX = this.plotWidth / 2 + this.plotLeft;
-        const centerY = this.plotHeight + this.plotTop;
-        const valueFontSize = Math.min(this.plotWidth, this.plotHeight) / 5
-        const labelFontSize = valueFontSize / 2.5;
-
-        this.widgetLabel
-            .attr({
-                text: configRef.current.label ?? channelData.current?.label,
-                x: centerX,
-                y: centerY - (this.plotHeight / 6)
-            })
-            .css({
-                color: basicTextFontColor(configRef, layoutConfigRef),
-                fontSize: `${labelFontSize}px`,
-                fontFamily: getWidgetFontFamily(configRef.current, layoutConfigRef.current)
-            });
+        const centerY = this.plotHeight / 1.25 + this.plotTop;
+        const valueFontSize = Math.min(this.plotWidth, this.plotHeight) / 4
 
         this.widgetValue
             .attr({
@@ -104,17 +91,6 @@ export function loadDoughnutOrGauge(
     valueTextFontColor = valueTextColor
 ) {
     return function () {
-        this.widgetLabel = this.renderer.text('')
-            .attr({
-                align: 'center',
-                zIndex: 1
-            })
-            .css({
-                color: basicTextFontColor(configRef, layoutConfigRef),
-                fontFamily: getWidgetFontFamily(configRef.current, layoutConfigRef.current)
-            })
-            .add()
-
         this.widgetValue = this.renderer.text('')
             .attr({
                 align: 'center',
@@ -125,16 +101,5 @@ export function loadDoughnutOrGauge(
                 fontFamily: getWidgetFontFamily(configRef.current, layoutConfigRef.current)
             })
             .add();
-
-        this.widgetUnit = this.renderer.text('')
-            .attr({
-                align: 'center',
-                zIndex: 1
-            })
-            .css({
-                color: basicTextFontColor(configRef, layoutConfigRef),
-                fontFamily: getWidgetFontFamily(configRef.current, layoutConfigRef.current)
-            })
-            .add()
     }
 }

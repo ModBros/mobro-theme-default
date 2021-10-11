@@ -8,12 +8,6 @@ mobro.hooks.addDataComponent({
     icon: "widget.graph",
     component: BasicChart,
     config: {
-        showLabel: {
-            type: "checkbox"
-        },
-        customLabel: {
-            type: "input"
-        },
         displayType: {
             type: "select",
             options: [
@@ -21,14 +15,14 @@ mobro.hooks.addDataComponent({
                 {label: "Pie", value: "pie"}
             ]
         },
-        color: {
-            type: "color"
-        },
-        inverseColor: {
-            type: "color"
-        },
         channel: {
             type: "channel"
+        },
+        height: {
+            type: 'numeric'
+        },
+        color: {
+            type: "color"
         },
         minMax: {
             type: "field-container",

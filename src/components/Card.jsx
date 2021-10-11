@@ -11,12 +11,14 @@ export default function Card(props) {
             {config.title ? <h5>{config.title}</h5> : null}
 
             {mobro.utils.component.renderComponents(components, path, ({Component, type, path, config, i}) => (
-                <Component
-                    key={i}
-                    path={path}
-                    config={config}
-                    inline={true}
-                />
+                <div className={'pb-05'}>
+                    <Component
+                        key={i}
+                        path={path}
+                        config={config}
+                        inline={true}
+                    />
+                </div>
             ))}
         </div>
     );

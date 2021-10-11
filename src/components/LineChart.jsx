@@ -4,18 +4,16 @@ import {defaultFontColor, maxValue, minValue} from 'theme/utils/chart'
 import {colorToRgba} from 'theme/utils/color'
 import {getWidgetFontColor, getWidgetFontFamily} from 'theme/utils/widget'
 
-const defaultLineColor = 'rgba(15, 150, 200, 1)';
+const defaultLineColor = 'rgba(0, 0, 0, 1)';
 
 function createOptions(configRef, layoutConfigRef, channelDataRef, settings, optionsRef) {
     const min = minValue(configRef, 'min', null);
     const max = maxValue(configRef, null, 'max', null);
 
     return {
-        colors: [colorToRgba(configRef.current?.lineColor, defaultLineColor)],
+        colors: [colorToRgba(configRef.current?.color, defaultLineColor)],
         chart: {
             backgroundColor: 'rgba(0, 0, 0, 0)',
-            margin: [0, 0, 0, 0],
-            spacing: [0, 0, 0, 0],
             animation: {
                 duration: 500
             }
@@ -135,13 +133,10 @@ function LineChart(props) {
                 {...chartProps}
                 createOptions={createOptions}
                 configKeyToListen={[
-                    'min',
-                    'max',
-                    'width',
                     'height',
-                    'lineWidth',
-                    'lineColor',
-                    'widgetFontColor'
+                    'color',
+                    'min',
+                    'max'
                 ]}
                 writeDataToSeries={(channelDataRef, optionsRef, configRef, layoutConfigRef, chartRef) => {
                     const [width, height] = containerSize.current;
